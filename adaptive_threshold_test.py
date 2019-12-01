@@ -9,14 +9,8 @@ Created on Thu Nov 28 22:28:26 2019
 import cv2
 import numpy as np
 import imutils
-from matplotlib import pyplot as plt
-from scipy.interpolate import splprep, splev
 
-def inverte(img):
-    img = (255-img)
-    return img
-
-img = cv2.imread('./board/13.jpg')
+img = cv2.imread('./board/11.jpg')
 img = imutils.resize(img, width=500)
 img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 #cv2.imshow('img', img)
@@ -43,7 +37,7 @@ th3 = cv2.adaptiveThreshold(img_gray,255,cv2.ADAPTIVE_THRESH_GAUSSIAN_C,\
 cv2.imshow('th3', th3)
 
 contours, hierarchy = cv2.findContours(th3,
-                                       cv2.RETR_CCOMP,
+                                       cv2.RETR_TREE,
                                        cv2.CHAIN_APPROX_SIMPLE)
 imgContours = img.copy()
 
@@ -67,23 +61,61 @@ for c in range(len(contours)):
     else:
         pass
     
+# =============================================================================
+# # Draw contour
+# cv2.drawContours(imgContours, [largest], -1, (0,255,0), 2)
+# cv2.imshow('ct', imgContours)
+# # Epsilon parameter needed to fit contour to polygon
+# epsilon = 0.1 * Lperimeter
+# epsilon = 0
+# # Approximates a polygon from chessboard edge
+# chessboardEdge = cv2.approxPolyDP(largest, epsilon, True)
+# 
+# # Create new all black image
+# mask = np.zeros_like(img_gray)
+# # Copy the chessboard edges as a filled white polygon size of chessboard edge
+# cv2.fillConvexPoly(mask, chessboardEdge, 255, 1)
+# # Assign all pixels that are white (i.e the polygon, i.e. the chessboard)
+# extracted = np.zeros_like(img)
+# extracted[mask == 255] = img[mask == 255]
+# 
+# cv2.imshow('ct', imgContours)
+# cv2.imshow('ex', extracted)
+# =============================================================================
+        
 # Draw contour
 cv2.drawContours(imgContours, [largest], -1, (0,255,0), 2)
 cv2.imshow('ct', imgContours)
-# Epsilon parameter needed to fit contour to polygon
-epsilon = 0.1 * Lperimeter
 # Approximates a polygon from chessboard edge
-chessboardEdge = cv2.approxPolyDP(largest, epsilon, True)
-
+chessboardEdge = cv2.approxPolyDP(largest, 0, True)
 # Create new all black image
-mask = np.zeros((img.shape[0], img.shape[1]), 'uint8')*125
+mask = np.zeros_like(img_gray)
 # Copy the chessboard edges as a filled white polygon size of chessboard edge
 cv2.fillConvexPoly(mask, chessboardEdge, 255, 1)
 # Assign all pixels that are white (i.e the polygon, i.e. the chessboard)
 extracted = np.zeros_like(img)
 extracted[mask == 255] = img[mask == 255]
-# remove strip around edge
-extracted[np.where((extracted == [125, 125, 125]).all(axis=2))] = [0, 0, 20]
 
 cv2.imshow('ct', imgContours)
 cv2.imshow('ex', extracted)
+
+
+
+# =============================================================================
+# edged = cv2.Canny(extracted, 10, 250)
+# cv2.imshow('Canny', edged)
+# 
+# kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (7, 7))
+# closed = cv2.morphologyEx(edged, cv2.MORPH_CLOSE, kernel)
+# closed = cv2.erode(closed, None, iterations=2)
+# closed = cv2.dilate(closed, None, iterations=1)
+# cv2.imshow("Closed", closed)
+# 
+# cnts, _ = cv2.findContours(closed.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+# c = sorted(cnts, key = cv2.contourArea, reverse = True)[0]
+# peri = cv2.arcLength(c, True)
+# approx = cv2.approxPolyDP(c, 0.01 * peri, True)
+# cv2.drawContours(extracted, [approx], -1, (0, 255, 0), 2)
+# cv2.imshow('ex', extracted)
+# =============================================================================
+
