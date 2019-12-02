@@ -9,9 +9,23 @@ Created on Thu Nov 28 11:31:09 2019
 import cv2
 import numpy as np
 from matplotlib import pyplot as plt
+import imutils
 
 
-img = cv2.imread('./board/yes-3-0.jpg', 0)
+def hisNorm_and_CLAHE(imgpath):
+    image = cv2.imread(imgpath)
+    image = imutils.resize(image, width=400)
+    image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    
+    eq = cv2.equalizeHist(image)
+    
+    clahe = cv2.createCLAHE(clipLimit=2.00, tileGridSize=(8,8))
+    cl1 = clahe.apply(image)
+    
+    return eq, cl1
+
+
+img = cv2.imread('./board/11.jpg', 0)
 
 hist, bins = np.histogram(img.flatten(), 256, [0, 256])
 
