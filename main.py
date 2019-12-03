@@ -185,4 +185,4 @@ for r in range(8):
         radius = 7
         cv2.circle(ex2, roi, radius, (255,0,0), 3)
 
-
+cv2.imshow('ex2', ex2)
