@@ -86,7 +86,7 @@ def lineSegmentation(img):
     lines = cv2.HoughLinesP(canny, 1, np.pi/180, 150, minLineLength=200, maxLineGap=10)
     for line in lines:
         x1,y1,x2,y2 = line[0]
-        cv2.line(img, (x1,y1), (x2,y2), (0,255,0), 2)
+        cv2.line(img, (x1,y1), (x2,y2), (0,255,0), 2, cv2.LINE_AA)
         
     horizontal = []
     vertical = []
@@ -132,7 +132,7 @@ def detectCorners(img, vertical, horizontal):
         
     return img, dedupeCorners
 
-imgpath = './board/11.jpg'
+imgpath = './board/12.jpg'
 img = cv2.imread(imgpath)
 img = imutils.resize(img, width=500)
 cv2.imshow('img', img)
@@ -141,6 +141,9 @@ extracted = removeBackground(img)
 cv2.imshow('ex', extracted)    
 
 ex2, edges = getChessboardEdges(extracted)
+
+ex3 = ex2.copy()
+cv2.imshow('ex2', ex2)
 
 ex2, horizontal, vertical = lineSegmentation(ex2)
 
