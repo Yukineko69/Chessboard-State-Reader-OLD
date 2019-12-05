@@ -11,6 +11,7 @@ import cv2
 import imutils
 from boardRecognition import boardRecognition
 from Board import Board
+from ChessEngine import ChessEngine
 
 imgpath = '../board/13.jpg'
 img = cv2.imread(imgpath)
@@ -29,3 +30,5 @@ board = Board(squares)
 board.draw(img)
 cv2.imshow('img2',img)
 board.assignState()
+
+engine = ChessEngine()
