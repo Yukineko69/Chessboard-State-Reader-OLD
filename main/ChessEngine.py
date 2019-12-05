@@ -10,3 +10,29 @@ class ChessEngine:
         self.engine = chess.uci.popen_engine('./stockfish_10_x64')
         self.engine.uci()
         print(self.engBoard)
+
+    def updateMove(self, move):
+        uciMove = chess.Move.from_uci(move)
+
+        if uciMove not in self.engBoard.legal_moves:
+            return 1
+        else:
+            self.engBoard.push(uciMove)
+            print(self.engBoard)
+            return 0
+
+    def feedToAI(self):
+        self.engine.position(self.engBoard)
+
+        response = self.engine.go(movetime=2000)
+        bestMove = response[0]
+
+        self.engBoard.push(bestMove)
+
+        f = open('Game.txt', 'a+')
+        f.write(bestMove.uci() + '\r\n')
+        f.close()
+
+        print(self.engBoard)
+
+        return bestMove

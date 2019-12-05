@@ -16,14 +16,16 @@ from Board import Board
 
 debug = True
 
-class boardRecognition:
+class BoardRecognition:
     def __init__(self, camera):
         self.cam = camera
 
     def initializeBoard(self):
         corners = []
         while len(corners) < 81:
-            image = self.cam.takePicture()
+            # image = self.cam.takePicture() TESTING
+            imgpath = '../board/13.jpg'
+            image = cv2.imread(imgpath)
             # Threshold image
             adaptiveThresh, img = self.cleanImage(image)
             # Remove background
