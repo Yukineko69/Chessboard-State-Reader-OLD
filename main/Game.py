@@ -9,15 +9,16 @@ from Camera import Camera
 
 
 class Game:
-    def __init__(self):
+    def __init__(self, url):
         self.over = False
         self.CPUMoveError = False
         self.PlayerMoveError = False
         self.isCheck = False
         self.winner = "Me"
+        self.url = url
 
-    def setUp(self, url):
-        self.camera = Camera(url)
+    def setUp(self):
+        self.camera = Camera(self.url)
         self.chessEngine = ChessEngine()
         self.board = 0
         self.current = 0

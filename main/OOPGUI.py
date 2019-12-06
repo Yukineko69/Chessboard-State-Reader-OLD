@@ -12,14 +12,12 @@ HARD_SKILL_LEVEL = 10
 EXTREME_SKILL_LEVEL = 15
 MASTER_SKILL_LEVEL = 20
 
-url = 'http://192.168.1.7:8080/shot.jpg'
-
 class Application(tk.Tk):
-    def __init__(self, *args, **kwargs):
+    def __init__(self, url):
         '''
         GUI Controller
         '''
-        tk.Tk.__init__(self, *args, **kwargs)
+        tk.Tk.__init__(self)
 
         container = tk.Frame(self)
         container.pack(side='top', fill='both', expand=True)
@@ -27,7 +25,7 @@ class Application(tk.Tk):
         container.grid_columnconfigure(0, weight=1)
 
         self.frames = {}
-        self.game = Game()
+        self.game = Game(url)
 
         # Holds CPU move information
         self.move = StringVar()
@@ -105,19 +103,19 @@ class ChooseDifficultyPage(tk.Frame):
 
         label = tk.Label(self, text='Please choose the difficulty', font=LARGE_FONT)
 
-        easyButton = tk.Button(self, text='Easy',
+        easyButton = tk.Button(self, text='Easy', font=MED_FONT,
                                command = lambda: [self.setDifficulty(controller, EASY_SKILL_LEVEL),
                                                   controller.show_frame(ChooseColorPage)])
-        intermediateButton = tk.Button(self, text='Intermediate',
+        intermediateButton = tk.Button(self, text='Intermediate', font=MED_FONT,
                                command = lambda: [self.setDifficulty(controller, INTERMEDIATE_SKILL_LEVEL),
                                                   controller.show_frame(ChooseColorPage)])
-        hardButton = tk.Button(self, text='Hard',
+        hardButton = tk.Button(self, text='Hard', font=MED_FONT,
                                command = lambda: [self.setDifficulty(controller, HARD_SKILL_LEVEL),
                                                   controller.show_frame(ChooseColorPage)])
-        extremeButton = tk.Button(self, text='Extreme',
+        extremeButton = tk.Button(self, text='Extreme', font=MED_FONT,
                                command = lambda: [self.setDifficulty(controller, EXTREME_SKILL_LEVEL),
                                                   controller.show_frame(ChooseColorPage)])
-        masterButton = tk.Button(self, text='Master',
+        masterButton = tk.Button(self, text='Master', font=MED_FONT,
                                command = lambda: [self.setDifficulty(controller, MASTER_SKILL_LEVEL),
                                                   controller.show_frame(ChooseColorPage)])
 
@@ -260,4 +258,68 @@ class CheckPage(tk.Frame):
     Alert user they are in check
     '''
     def __init__(self, parent, controller):
-        
+        tk.Frame.__init__(self, parent)
+
+        label = tk.Label(self, text='Your are in CHECK!!!', font=LARGE_FONT)
+
+        continueButton = tk.Button(self, text='Continue', font=MED_FONT,
+                                   command = lambda: [controller.show_frame(PlayerMovePage)])
+
+        label.pack(padx=10, pady=10)
+        continueButton.pack()
+
+class ChoosePromotionPage(tk.Frame):
+    '''
+    Ask user to choose which piece they would like to promote their pawn
+    '''
+
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+
+        label = tk.Label(self, text='Choose your promotion', font=LARGE_FONT)
+
+        queenButton = tk.Button(self, text='Queen', font=MED_FONT,
+                                command = lambda: [self.setPromotion(controller, 'q')])
+        rookButton = tk.Button(self, text='Rook', font=MED_FONT,
+                               command = lambda: [self.setPromotion(controller, 'r')])
+        bishopButton = tk.Button(self, text='Bishop', font=MED_FONT,
+                                 command = lambda: [self.setPromotion(controller, 'b')])
+        knightButton = tk.Button(self, text='Knight', font=MED_FONT,
+                                 command = lambda: [self.setPromotion(controller, 'n')])
+
+        label.pack(padx=10, pady=10)
+        queenButton.pack()
+        rookButton.pack()
+        bishopButton.pack()
+        knightButton.pack()
+
+    def setPromotion(self, controller, promotion='q'):
+        '''
+        Updates the move to UCI
+        Check validity and update board
+        '''
+        controller.game.board.promotion = promotion
+        controller.game.board.move += promotion
+        controller.game.playerPromotion(controller.game.board.move)
+
+        if controller.game.PlayerMoveError:
+            controller.game.current = controller.game.previous
+            controller.show_frame(PlayerMoveErrorPage)
+
+        else:
+            controller.move.set(controller.game.CPUMove())
+            controller.show_frame(CPUMovePage)
+
+class GameOverPage(tk.Frame):
+    '''
+    Shows the winner of the game
+    '''
+    def __init__(self, parent, controller):
+        tk.Frame.__init__(self, parent)
+
+        label = tk.Label(self, text='Game Over', font=LARGE_FONT)
+
+        self.winnerLabel = tk.Label(self, textvariable=controller.winner, font=LARGE_FONT)
+
+        label.pack(padx=10, pady=10)
+        self.winnerLabel.pack(padx=10, pady=10)
