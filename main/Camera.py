@@ -17,6 +17,12 @@ class Camera:
         self.url = url
 
     def takePicture(self):
+        img = cv2.imread('../board/28.jpg')
+        img = imutils.resize(img, width=500)
+
+        return img
+
+    def takePicture2(self):
         imgResponse = urllib.request.urlopen(self.url)
         imgNp = np.array(bytearray(imgResponse.read()), dtype=np.uint8)
         img = cv2.imdecode(imgNp, -1)

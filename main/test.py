@@ -14,7 +14,7 @@ from Board import Board
 from ChessEngine import ChessEngine
 from Game import Game
 
-imgpath = '../board/13.jpg'
+imgpath = '../board/28.jpg'
 img = cv2.imread(imgpath)
 img = imutils.resize(img, width=500)
 cv2.imshow('img', img)

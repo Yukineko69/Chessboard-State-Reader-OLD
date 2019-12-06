@@ -29,7 +29,7 @@ class ChessEngine:
 
         self.engBoard.push(bestMove)
 
-        f = open('Game.txt', 'a+')
+        f = open('./Gamelog/Game.txt', 'a+')
         f.write(bestMove.uci() + '\r\n')
         f.close()
 

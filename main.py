@@ -49,7 +49,7 @@ def getChessboardEdges(img):
     closed = cv2.morphologyEx(canny, cv2.MORPH_CLOSE, kernel)
     closed = cv2.erode(closed, kernel, iterations=1)
     closed = cv2.dilate(closed, kernel, iterations=1)
-#    cv2.imshow('closed', closed)
+    cv2.imshow('closed', closed)
     
     cnts, _ = cv2.findContours(closed.copy(), cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
     c = sorted(cnts, key = cv2.contourArea, reverse = True)[1]
@@ -132,7 +132,7 @@ def detectCorners(img, vertical, horizontal):
         
     return img, dedupeCorners
 
-imgpath = './board/12.jpg'
+imgpath = './board/33.jpg'
 img = cv2.imread(imgpath)
 img = imutils.resize(img, width=500)
 cv2.imshow('img', img)
@@ -189,3 +189,4 @@ for r in range(8):
         cv2.circle(ex2, roi, radius, (255,0,0), 3)
 
 cv2.imshow('ex2', ex2)
+cv2.imshow('ex3',ex3)

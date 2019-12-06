@@ -7,6 +7,7 @@ from BoardRecognition import BoardRecognition
 from Board import Board
 from Camera import Camera
 
+
 class Game:
     def __init__(self):
         self.over = False
@@ -42,7 +43,7 @@ class Game:
             self.PlayerMoveError = True
         else:
             self.PlayerMoveError = False
-            f = open('Game.txt', 'a+')
+            f = open('./Gamelog/Game.txt', 'a+')
             f.write(chess.Move.from_uci(move).uci() + '\r\n')
             f.close()
         # Check game over
@@ -60,7 +61,7 @@ class Game:
             self.PlayerMoveError = True
         else:
             self.PlayerMoveError = False
-            f = open('Game.txt', 'a+')
+            f = open('./Gamelog/Game.txt', 'a+')
             f.write(chess.Move.from_uci(move).uci() + '\r\n')
             f.close()
 

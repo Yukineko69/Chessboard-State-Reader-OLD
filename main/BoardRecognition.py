@@ -23,9 +23,10 @@ class BoardRecognition:
     def initializeBoard(self):
         corners = []
         while len(corners) < 81:
-            # image = self.cam.takePicture() TESTING
-            imgpath = '../board/13.jpg'
-            image = cv2.imread(imgpath)
+            image = self.cam.takePicture()
+            # TESTING
+            # imgpath = '../board/28.jpg'
+            # image = cv2.imread(imgpath)
             # Threshold image
             adaptiveThresh, img = self.cleanImage(image)
             # Remove background
@@ -168,7 +169,7 @@ class BoardRecognition:
         for c in corners:
             matched = False
             for d in rmvDupCorners:
-                if math.sqrt((d[0]-c[0])*(d[0]-c[0]) + (d[1]-c[1])*(d[1]-c[1])) < 10:
+                if math.sqrt((d[0]-c[0])*(d[0]-c[0]) + (d[1]-c[1])*(d[1]-c[1])) < 20:
                     matched = True
                     break
             if not matched:

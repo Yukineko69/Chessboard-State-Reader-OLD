@@ -7,9 +7,10 @@ Created on Fri Dec  6 02:24:11 2019
 """
 
 from Game import Game
+from OOPGUI import *
 import cv2
 
-url = 'http://192.168.1.4:8080/shot.jpg'
+url = 'http://192.168.1.7:8080/shot.jpg'
 
 game = Game()
 game.setUp(url)
