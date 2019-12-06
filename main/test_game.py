@@ -10,10 +10,9 @@ from Game import Game
 from OOPGUI import *
 import cv2
 
-url = 'http://192.168.1.7:8080/shot.jpg'
+url = 'http://192.168.1.2:8080/shot.jpg'
 
-game = Game()
-game.setUp(url)
+game = Game(url)
+game.setUp()
 game.analyzeBoard()
 game.checkBoardIsSet()
-cv2.imshow('current', game.current)

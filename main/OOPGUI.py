@@ -161,7 +161,7 @@ class CPUMovePage(tk.Frame):
 
         CPUButton = tk.Button(self, text='Done', font=MED_FONT,
                               command = lambda: [controller.game.updateCurrent(),
-                                                 sef.checkValid(controller)])
+                                                 self.checkValid(controller)])
 
         label.pack(padx=10, pady=10)
         self.moveLabel.pack(padx=10, pady=10)

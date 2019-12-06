@@ -14,7 +14,7 @@ from Line import Line
 from Square import Square
 from Board import Board
 
-debug = True
+debug = False
 
 class BoardRecognition:
     def __init__(self, camera):

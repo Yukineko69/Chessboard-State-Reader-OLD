@@ -46,8 +46,8 @@ class Board:
     def determineChanges(self, previous, current):
         copy = current.copy()
 
-        largestSquare = 0
-        secondLargestSquare = 0
+        largestSquare = self.squares[0]
+        secondLargestSquare = self.squares[0]
         largestDist = 0
         secondLargestDist = 0
         stateChange = []
@@ -168,8 +168,6 @@ class Board:
             squareTwo.draw(copy, (255,0,0), 2)
             cv2.imshow("previous",previous)
             cv2.imshow("identified",copy)
-            cv2.waitKey(0)
-            cv2.destroyAllWindows()
 
         # get colors for each square from each photo
         oneCurr = squareOne.roiColor(current)

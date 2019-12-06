@@ -37,7 +37,14 @@ class Game:
         self.previous = self.current
         self.current = self.camera.takePicture()
         move = self.board.determineChanges(self.previous, self.current)
+
+        # # Test
+        # move = 'd7d5'
+
         code = self.chessEngine.updateMove(move)
+        # print('my move:', move)
+        # print('code:', code)
+        # print('PlayerMoveError:', self.PlayerMoveError)
 
         if code == 1:
             # Illegal move
@@ -86,6 +93,13 @@ class Game:
 
         move = self.board.determineChanges(self.previous, self.current)
         move = chess.Move.from_uci(move)
+
+        # move = chess.Move.from_uci('e2e4')
+        # # Test
+        # print('i move for cpu:', move)
+        # print('cpu move:', self.CPULastMove)
+        # print('CPUMoveError:', self.CPUMoveError)
+
 
         # Check if player moved CPU piece correctly
         if move == self.CPULastMove:
