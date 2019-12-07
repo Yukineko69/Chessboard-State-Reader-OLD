@@ -10,6 +10,9 @@ import numpy as np
 import cv2
 
 class Square:
+    '''
+    Squares of chessboard
+    '''
     def __init__(self, image, c1, c2, c3, c4, position, state=''):
         self.c1 = c1
         self.c2 = c2

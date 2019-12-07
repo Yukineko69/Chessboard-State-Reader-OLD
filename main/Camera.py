@@ -13,6 +13,9 @@ import time
 import imutils
 
 class Camera:
+    '''
+    Open new connection to IP Camera webcam
+    '''
     def __init__(self, url):
         self.url = url
 

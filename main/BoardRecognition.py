@@ -17,6 +17,10 @@ from Board import Board
 debug = False
 
 class BoardRecognition:
+    '''
+    Handles the initialization of the board
+    Analyzes board to create objects from chessboard
+    '''
     def __init__(self, camera):
         self.cam = camera
 

@@ -13,6 +13,9 @@ import math
 debug = False
 
 class Board:
+    '''
+    Holds all Squares objects and updates changes to them after every move
+    '''
     def __init__(self, squares):
         self.squares = squares
         self.boardMatrix = []

@@ -5,6 +5,11 @@ import stockfish
 from Board import Board
 
 class ChessEngine:
+    '''
+    Using python built-in chess engine to interacts with stockfish engine
+    Interations through Universal Chess Interface protocol (UCI)
+    Save game moves into txt file
+    '''
     def __init__(self):
         self.engBoard = chess.Board()
         self.engine = chess.uci.popen_engine('./stockfish_10_x64')

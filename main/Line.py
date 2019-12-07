@@ -9,6 +9,9 @@ Created on Tue Dec  3 13:29:47 2019
 import numpy as np
 
 class Line:
+    '''
+    Lines of chessboard
+    '''
     def __init__(self, x1, x2, y1, y2):
         self.x1 = x1
         self.x2 = x2

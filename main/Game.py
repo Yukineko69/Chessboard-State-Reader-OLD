@@ -9,6 +9,10 @@ from Camera import Camera
 
 
 class Game:
+    '''
+    Holds the whole game information
+    Interacting with Board and Chess Engine
+    '''
     def __init__(self, url):
         self.over = False
         self.CPUMoveError = False

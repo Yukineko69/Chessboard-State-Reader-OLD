@@ -1,5 +1,4 @@
 import tkinter as tk
-from tkinter import *
 from Game import Game
 
 LARGE_FONT = ('system', 20)
@@ -28,14 +27,14 @@ class Application(tk.Tk):
         self.game = Game(url)
 
         # Holds CPU move information
-        self.move = StringVar()
+        self.move = tk.StringVar()
         self.move.set('e2')
         # Holds winner information
-        self.winner = StringVar()
+        self.winner = tk.StringVar()
         self.winner.set('CPU Win')
 
         # Give page objects to Application
-        for object in (StartGamePage, InitializeBoardPage,SetBoardPage, ChooseColorPage,
+        for object in (StartGamePage, InitializeBoardPage,SetBoardPage, ChooseSidePage,
                        ChooseDifficultyPage, CPUMovePage, PlayerMovePage, CheckPage,
                        CPUMoveErrorPage, GameOverPage, PlayerMoveErrorPage, ChoosePromotionPage):
             frame = object(container, self)
@@ -105,19 +104,19 @@ class ChooseDifficultyPage(tk.Frame):
 
         easyButton = tk.Button(self, text='Easy', font=MED_FONT,
                                command = lambda: [self.setDifficulty(controller, EASY_SKILL_LEVEL),
-                                                  controller.show_frame(ChooseColorPage)])
+                                                  controller.show_frame(ChooseSidePage)])
         intermediateButton = tk.Button(self, text='Intermediate', font=MED_FONT,
                                command = lambda: [self.setDifficulty(controller, INTERMEDIATE_SKILL_LEVEL),
-                                                  controller.show_frame(ChooseColorPage)])
+                                                  controller.show_frame(ChooseSidePage)])
         hardButton = tk.Button(self, text='Hard', font=MED_FONT,
                                command = lambda: [self.setDifficulty(controller, HARD_SKILL_LEVEL),
-                                                  controller.show_frame(ChooseColorPage)])
+                                                  controller.show_frame(ChooseSidePage)])
         extremeButton = tk.Button(self, text='Extreme', font=MED_FONT,
                                command = lambda: [self.setDifficulty(controller, EXTREME_SKILL_LEVEL),
-                                                  controller.show_frame(ChooseColorPage)])
+                                                  controller.show_frame(ChooseSidePage)])
         masterButton = tk.Button(self, text='Master', font=MED_FONT,
                                command = lambda: [self.setDifficulty(controller, MASTER_SKILL_LEVEL),
-                                                  controller.show_frame(ChooseColorPage)])
+                                                  controller.show_frame(ChooseSidePage)])
 
         label.pack(padx=10, pady=10)
         easyButton.pack()
@@ -129,7 +128,7 @@ class ChooseDifficultyPage(tk.Frame):
     def setDifficulty(self, controller, skill_level=1):
         controller.game.chessEngine.engine.setoption({'Skill Level' : skill_level})
 
-class ChooseColorPage(tk.Frame):
+class ChooseSidePage(tk.Frame):
     '''
     Ask user choose to move first or not (choose side)
     '''
