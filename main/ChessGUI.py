@@ -1,5 +1,6 @@
 import tkinter as tk
 from Game import Game
+from PIL import ImageTk, Image
 
 LARGE_FONT = ('system', 20)
 MED_FONT = ('system', 16)
@@ -10,6 +11,24 @@ INTERMEDIATE_SKILL_LEVEL = 5
 HARD_SKILL_LEVEL = 10
 EXTREME_SKILL_LEVEL = 15
 MASTER_SKILL_LEVEL = 20
+
+def popUpImage(imgpath, label=''):
+    popup = tk.Toplevel()
+    canvas = tk.Canvas(popup, width = 500, height = 800)
+    canvas.pack(expand=tk.YES, fill=tk.BOTH)
+
+    if not label == '':
+        label = tk.Label(popup, text=label, font=LARGE_FONT)
+        label.pack(padx=10, pady=10)
+
+    img = Image.open(imgpath)
+    # basewidth = 500
+    # wpercent = (basewidth/float(img.size[0]))
+    # hsize = int((float(img.size[1]) * float(wpercent)))
+    # img = img.resize((basewidth, hsize), Image.ANTIALIAS)
+    tkImg = ImageTk.PhotoImage(img)
+    canvas.create_image(0, 0, image=tkImg, anchor=tk.NW)
+    canvas.tkImg = tkImg
 
 class Application(tk.Tk):
     def __init__(self, url):
@@ -34,17 +53,20 @@ class Application(tk.Tk):
         self.winner.set('CPU Win')
 
         # Give page objects to Application
-        for object in (StartGamePage, InitializeBoardPage,SetBoardPage, ChooseSidePage,
+        for page in (StartGamePage, InitializeBoardPage,SetBoardPage, ChooseSidePage,
                        ChooseDifficultyPage, CPUMovePage, PlayerMovePage, CheckPage,
                        CPUMoveErrorPage, GameOverPage, PlayerMoveErrorPage, ChoosePromotionPage):
-            frame = object(container, self)
-            self.frames[object] = frame
+            frame = page(container, self)
+            self.frames[page] = frame
             frame.grid(row=0, column=0, sticky='nsew')
 
         self.show_frame(StartGamePage)
 
-    def show_frame(self, object):
-        frame = self.frames[object]
+    def show_frame(self, page):
+        '''
+        Raise frame to top to display it
+        '''
+        frame = self.frames[page]
         frame.tkraise()
 
 class StartGamePage(tk.Frame):
@@ -60,7 +82,7 @@ class StartGamePage(tk.Frame):
                                     command = lambda: [controller.show_frame(InitializeBoardPage),
                                                        controller.game.setUp()])
 
-        label.pack(pady=20, padx=20)
+        label.pack(padx=20, pady=20)
         startGameButton.pack()
 
 class InitializeBoardPage(tk.Frame):
@@ -73,7 +95,9 @@ class InitializeBoardPage(tk.Frame):
         label = tk.Label(self, text='Please clear your board for game set up', font=LARGE_FONT)
         initBoardButton = tk.Button(self, text='Done', font=MED_FONT,
                                     command = lambda: [controller.show_frame(SetBoardPage),
-                                                       controller.game.analyzeBoard()])
+                                                       controller.game.analyzeBoard(),
+                                                       popUpImage('./ProcessImage/InitializedBoard.jpg',
+                                                                  label='Initialized board')])
 
         label.pack(padx=10, pady=10)
         initBoardButton.pack()
@@ -88,7 +112,9 @@ class SetBoardPage(tk.Frame):
         label = tk.Label(self, text='Game initialization done. Please setup your board', font=LARGE_FONT)
         initBoardButton = tk.Button(self, text='Done', font=MED_FONT,
                                     command = lambda: [controller.show_frame(ChooseDifficultyPage),
-                                                       controller.game.checkBoardIsSet()])
+                                                       controller.game.checkBoardIsSet(),
+                                                       popUpImage('./ProcessImage/SetUpBoard.jpg',
+                                                                  label='Set up board')])
 
         label.pack(padx=10, pady=10)
         initBoardButton.pack()
@@ -160,7 +186,11 @@ class CPUMovePage(tk.Frame):
 
         CPUButton = tk.Button(self, text='Done', font=MED_FONT,
                               command = lambda: [controller.game.updateCurrent(),
-                                                 self.checkValid(controller)])
+                                                 self.checkValid(controller),
+                                                 popUpImage('./ProcessImage/Previous.jpg',
+                                                            label='Previous'),
+                                                 popUpImage('./ProcessImage/Identified.jpg',
+                                                            label='Identified')])
 
         label.pack(padx=10, pady=10)
         self.moveLabel.pack(padx=10, pady=10)
@@ -195,7 +225,11 @@ class PlayerMovePage(tk.Frame):
 
         playerButton = tk.Button(self, text='Done', font=MED_FONT,
                                  command = lambda: [controller.game.playerMove(),
-                                                    self.checkValid(controller)])
+                                                    self.checkValid(controller),
+                                                    popUpImage('./ProcessImage/Previous.jpg',
+                                                               label='Previous'),
+                                                    popUpImage('./ProcessImage/Identified.jpg',
+                                                               label='Identified')])
         resignButton = tk.Button(self, text='Resign', font=MED_FONT,
                                  command = lambda: [controller.show_frame(GameOverPage)])
 

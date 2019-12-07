@@ -47,6 +47,9 @@ class BoardRecognition:
         # Create board
         board = Board(squares)
 
+        board.draw(image)
+        cv2.imwrite('./ProcessImage/InitializedBoard.jpg', image)
+
         return board
 
     def cleanImage(self, image):
@@ -217,7 +220,7 @@ class BoardRecognition:
                 newSquare = Square(colorEdges,c1,c2,c3,c4,position)
                 newSquare.draw(colorEdges,(0,255,255),2)
                 newSquare.drawROI(colorEdges,(255,0,0),2)
-                newSquare.classify(colorEdges)
+                newSquare.namedTheSquare(colorEdges)
                 squares.append(newSquare)
 
         if debug:

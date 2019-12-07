@@ -37,16 +37,18 @@ class Game:
     def checkBoardIsSet(self):
         self.current = self.camera.takePicture()
 
+        cv2.imwrite('./ProcessImage/SetUpBoard.jpg', self.current)
+
     def playerMove(self):
         self.previous = self.current
-        self.current = self.camera.takePicture()
+        self.current = self.camera.takePicture4()
         move = self.board.determineChanges(self.previous, self.current)
 
         # # Test
         # move = 'd7d5'
 
         code = self.chessEngine.updateMove(move)
-        # print('my move:', move)
+        print('Your move:', move)
         # print('code:', code)
         # print('PlayerMoveError:', self.PlayerMoveError)
 
@@ -93,15 +95,15 @@ class Game:
 
     def updateCurrent(self):
         self.previous = self.current
-        self.current = self.camera.takePicture()
+        self.current = self.camera.takePicture3()
 
         move = self.board.determineChanges(self.previous, self.current)
         move = chess.Move.from_uci(move)
 
         # move = chess.Move.from_uci('e2e4')
         # # Test
-        # print('i move for cpu:', move)
-        # print('cpu move:', self.CPULastMove)
+        print('Your move for cpu:', move)
+        print('Cpu move:', self.CPULastMove)
         # print('CPUMoveError:', self.CPUMoveError)
 
 

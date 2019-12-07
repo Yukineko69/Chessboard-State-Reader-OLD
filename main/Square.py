@@ -54,12 +54,6 @@ class Square:
 
         return averageColor
 
-    def classify(self, image):
-        # rgb = self.roiColor(image)
-        #
-        # sum = 0
-        # for i in range(3):
-        #     sum += (self.emptyColor[i] - rgb[i])**2
-
+    def namedTheSquare(self, image):
         cv2.putText(image, self.position, self.roi, cv2.FONT_HERSHEY_SIMPLEX,
                     0.5, (0,255,0), 1, cv2.LINE_AA)

@@ -25,6 +25,18 @@ class Camera:
 
         return img
 
+    def takePicture3(self):
+        img = cv2.imread('../board/28-2.jpg')
+        img = imutils.resize(img, width=500)
+
+        return img
+
+    def takePicture4(self):
+        img = cv2.imread('../board/28-3.jpg')
+        img = imutils.resize(img, width=500)
+
+        return img
+
     def takePicture2(self):
         imgResponse = urllib.request.urlopen(self.url)
         imgNp = np.array(bytearray(imgResponse.read()), dtype=np.uint8)

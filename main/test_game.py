@@ -7,7 +7,7 @@ Created on Fri Dec  6 02:24:11 2019
 """
 
 from Game import Game
-from OOPGUI import *
+from ChessGUI import *
 import cv2
 
 url = 'http://192.168.1.2:8080/shot.jpg'
