@@ -170,7 +170,7 @@ class Board:
 
         squareOne.draw(copy, (255,0,0), 2)
         squareTwo.draw(copy, (255,0,0), 2)
-        cv2.imwrite('./ProcessImage/Previous.jpg', previous)
+        # cv2.imwrite('./ProcessImage/Previous.jpg', previous)
         cv2.imwrite('./ProcessImage/Identified.jpg', copy)
 
         # Get colors for each square from each photo

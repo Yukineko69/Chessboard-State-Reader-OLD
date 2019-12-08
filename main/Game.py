@@ -41,7 +41,8 @@ class Game:
 
     def playerMove(self):
         self.previous = self.current
-        self.current = self.camera.takePicture4()
+        self.current = self.camera.takePicture()
+        # self.current = self.camera.takePicture4()
         move = self.board.determineChanges(self.previous, self.current)
 
         # # Test
@@ -87,6 +88,20 @@ class Game:
         self.CPULastMove = self.chessEngine.feedToAI()
         self.isCheck = self.chessEngine.engBoard.is_check()
 
+        copy = self.current.copy()
+        if len(self.CPULastMove.uci()) == 4:
+            position1 = self.CPULastMove.uci()[:2]
+            position2 = self.CPULastMove.uci()[2:]
+            CPUMoveSquares = []
+
+            for square in self.board.squares:
+                if square.position == position1 or square.position == position2:
+                    CPUMoveSquares.append(square)
+
+            CPUMoveSquares[0].draw(copy, (255,0,0), 2)
+            CPUMoveSquares[1].draw(copy, (255,0,0), 2)
+            cv2.imwrite('./ProcessImage/CPUMove.jpg', copy)
+
         if self.chessEngine.engBoard.is_checkmate():
             self.winner = 'CPU win'
             self.over = True
@@ -95,7 +110,8 @@ class Game:
 
     def updateCurrent(self):
         self.previous = self.current
-        self.current = self.camera.takePicture3()
+        self.current = self.camera.takePicture()
+        # self.current = self.camera.takePicture3()
 
         move = self.board.determineChanges(self.previous, self.current)
         move = chess.Move.from_uci(move)

@@ -54,7 +54,7 @@ class BoardRecognition:
 
     def cleanImage(self, image):
         # Resize
-        img = imutils.resize(image, width=500)
+        img = imutils.resize(image, width=800)
         # Grayscale
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         # Threshold

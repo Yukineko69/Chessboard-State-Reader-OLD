@@ -9,6 +9,6 @@ Created on Sat Dec  7 00:59:40 2019
 from ChessGUI import Application
 import cv2
 
-url = 'http://192.168.1.2:8080/shot.jpg'
+url = 'http://192.168.1.2:8080/photo.jpg'
 app = Application(url)
 app.mainloop()
